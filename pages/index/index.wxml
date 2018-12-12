@@ -1,0 +1,15 @@
+<!--index.wxml-->
+<view class="container bg ">
+  <view class="userinfo">
+        <image bindtap="bindViewTap" class="title_class" src="{{title_image}}" mode="cover"></image>
+    <button wx:if="{{!hasUserInfo && canIUse}}" open-type="getUserInfo" bindgetuserinfo="getUserInfo"> 获取头像昵称 </button>
+    <block wx:else>
+      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+      <text class="userinfo-nickname">{{userInfo.nickName}}</text>
+    </block>
+      <button class="start_class start_button_cor"  open-type='openSetting'>start</button>
+  </view>
+  <!-- <image class='bg'mode="{{mode}}"></image> -->
+</view>
+
+

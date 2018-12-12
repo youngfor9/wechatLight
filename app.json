@@ -1,0 +1,33 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/info/info"
+  ],
+  "window": {
+    "navigationBarTitleText": "Demo"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/logs/logs",
+        "text": "排行榜"
+      },{
+        "pagePath": "pages/info/info",
+        "text": "个人信息"
+      }
+    ]
+  },
+  "networkTimeout": {
+    "request": 10000,
+    "downloadFile": 10000
+  },
+  "debug": true,
+  "navigateToMiniProgramAppIdList": [
+    "wxe5f52902cf4de896"
+  ]
+}
