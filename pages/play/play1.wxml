@@ -4,5 +4,8 @@
 </view>
   <text>{{content}}</text>
   <button class='exitGame_class' bindtap='exitGame'>退出</button>
-   <button class='next-question-class' bindtap='nextQuestion'>下一题</button>
+   <button class='next-question-class' bindtap='nextQuestion'>A 《无间道》</button>
+    <button class='next-question-class' bindtap='nextQuestion'>B 《美女与野兽》</button>
+     <button class='next-question-class' bindtap='nextQuestion'>C 《狮子王》</button>
+      <button class='next-question-class' bindtap='nextQuestion'>D 《海湾恋人》</button>
 </view>
