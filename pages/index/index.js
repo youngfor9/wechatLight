@@ -56,5 +56,11 @@ Page({
   },
   clickMe() {
     this.setData({ msg: 'Hello World' })
+  },
+  toPlay:function(e){
+    getCurrentPages().pop(),
+      wx.navigateTo({
+      url:'../play/play1'
+    })
   }
 })

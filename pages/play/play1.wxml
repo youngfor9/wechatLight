@@ -1,0 +1,8 @@
+<view>
+<view class='title-view-class'>
+<label class='title-label-class'>第{{titleNum}}题</label>
+</view>
+  <text>{{content}}</text>
+  <button class='exitGame_class' bindtap='exitGame'>退出</button>
+   <button class='next-question-class' bindtap='nextQuestion'>下一题</button>
+</view>

@@ -1,0 +1,8 @@
+/* pages/play/play1.wxss */
+.title-label-class{
+margin-left:auto;margin-right:auto;
+}
+
+.title-view-class{
+text-align: center
+}

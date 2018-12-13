@@ -13,7 +13,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.4.2",
 	"appid": "wx432c6d0b09814796",
-	"projectname": "wechattest",
+	"projectname": "wechatLight",
 	"isGameTourist": false,
 	"condition": {
 		"search": {
