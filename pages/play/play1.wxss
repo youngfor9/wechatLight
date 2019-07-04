@@ -1,8 +1,58 @@
 /* pages/play/play1.wxss */
 .title-label-class{
-margin-left:auto;margin-right:auto;
+margin-left:auto;
+margin-right:auto;
+color: #787878;
+font-size: 30px;
 }
 
 .title-view-class{
 text-align: center
+}
+.btn-selected-class{
+  background-color: #00FFee;
+  font-family: '微软雅黑';
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+}
+.ans-class{
+ background-color: cornflowerblue;
+ width: 50%;
+ height: 50px; 
+ margin-top: 5%;
+ color: white;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+}
+.anslist-class{
+  margin-top: 20%;
+}
+.question-class{
+  margin-top: 10%;
+  text-align: center;
+  margin-left: 5%;
+  margin-bottom: 10%;
+  
+}
+.exitGame_class{
+position: absolute;
+box-sizing:border-box;
+bottom: 0px; 
+}
+.ans-class::after {
+  border-radius: 98rpx;
+  border: 0; 
+}
+.ans-class:hover {
+	text-decoration: none;
+  
+}
+.ans-class:active {
+	position: relative;
+	top: 2px;
+  background-color: #3366FF; 
+  color:#D0D0D0; 
 }

@@ -1,5 +1,5 @@
 // pages/play/play1.js
-const content = '\n三年又三年'
+const content = '\n三年又三年,郭锦'
 const titleNum =1
 Page({
   /**
@@ -7,6 +7,10 @@ Page({
    */
   data: {
     content: content,
+    anslist: [{ id: 1, letter: "A", content: "鬼子来了" },
+      { id: 2, letter: "B", content: "精武门" },
+      { id: 3, letter: "C", content: "斗牛" },
+      { id: 4, letter: "D", content: "神话" }],
       titleNum: 1
   },
 
@@ -14,6 +18,29 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    var param ={
+      "did":1
+    }
+   var _this =this
+    wx.request({
+      url: 'https://www.taici.site/dialogue/selectDialogueById',
+      method:'GET',
+      data:param,
+      header:{
+        'content-type':'application/json'
+      },
+      success:function(res){
+          console.info("已经请求了："+res);
+          var restr = JSON.stringify(res);
+          var rejson =JSON.parse(restr);
+          _this.setData({
+            'content': rejson.data.dContent
+          })
+      },
+      fail:function(res){
+        console.log("--fail--");
+      }
+    })
   },
 
   /**
@@ -70,7 +97,21 @@ Page({
     })
   },
   nextQuestion:function (e) {
-    this.data.titleNum = this.data.titleNum +1,
+    this.data.titleNum = this.data.titleNum + 1;
+    console.info(e.currentTarget.id)
+    if(this.data.titleNum>9){
+      this.exitGame();
+    }
+    for (let i = 0; i < this.data.anslist.length; i++) {
+      if (e.currentTarget.id == "A") {
+        this.data.anslist[i].checked = true;
+      }
+      else {
+        //其他的位置为false
+        this.data.anslist[i].checked = false;
+      }
+    }
+  
     this.setData({
        titleNum: this.data.titleNum,
     })
