@@ -17,7 +17,8 @@
       {
         "pagePath": "pages/logs/logs",
         "text": "排行榜"
-      },{
+      },
+      {
         "pagePath": "pages/info/info",
         "text": "个人信息"
       }
@@ -30,5 +31,6 @@
   "debug": true,
   "navigateToMiniProgramAppIdList": [
     "wxe5f52902cf4de896"
-  ]
+  ],
+  "sitemapLocation": "sitemap.json"
 }

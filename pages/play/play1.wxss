@@ -56,3 +56,23 @@ bottom: 0px;
   background-color: #3366FF; 
   color:#D0D0D0; 
 }
+/**倒计时**/
+.progress_box{
+  position: relative;
+  width:84px;
+  height: 84px;  
+  display: flex;  
+  align-items: center;
+  justify-content: center;
+  background-color: #03abfd;
+  border-radius: 84px;
+}
+.progress_bg{
+  position: absolute;
+  width:84px;
+  height: 84px; 
+}
+.progress_canvas{
+  width:84px;
+  height: 84px; 
+}

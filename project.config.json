@@ -16,6 +16,8 @@
 	"appid": "wx432c6d0b09814796",
 	"projectname": "wechatLight",
 	"isGameTourist": false,
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

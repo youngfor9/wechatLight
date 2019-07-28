@@ -1,6 +1,8 @@
 // pages/play/play1.js
 const content = '\n三年又三年,郭锦'
 const titleNum =1
+var process = require("../play/process.js");
+
 Page({
   /**
    * 页面的初始数据
@@ -21,6 +23,7 @@ Page({
     var param ={
       "did":1
     }
+    process.count();
    var _this =this
     wx.request({
       url: 'https://www.taici.site/dialogue/selectDialogueById',
@@ -47,7 +50,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-  
+    process.drawProgressbg();
   },
 
   /**
@@ -99,7 +102,7 @@ Page({
   nextQuestion:function (e) {
     this.data.titleNum = this.data.titleNum + 1;
     console.info(e.currentTarget.id)
-    if(this.data.titleNum>9){
+    if(this.data.titleNum>10){
       this.exitGame();
     }
     for (let i = 0; i < this.data.anslist.length; i++) {
