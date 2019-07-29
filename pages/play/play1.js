@@ -1,5 +1,5 @@
 // pages/play/play1.js
-const content = '\n三年又三年,郭锦'
+const content = '\n三年又三年'
 const titleNum =1
 var process = require("../play/process.js");
 
@@ -21,12 +21,12 @@ Page({
    */
   onLoad: function (options) {
     var param ={
-      "did":1
+      "did":10
     }
     process.count();
    var _this =this
     wx.request({
-      url: 'https://www.taici.site/dialogue/selectDialogueById',
+      url: 'https://47.98.216.184/dialogue/selectDialogueById',
       method:'GET',
       data:param,
       header:{
@@ -99,11 +99,14 @@ Page({
       url: '../index/index'
     })
   },
+  countScore:function(e){
+    this.data
+  },
   nextQuestion:function (e) {
     this.data.titleNum = this.data.titleNum + 1;
     console.info(e.currentTarget.id)
     if(this.data.titleNum>10){
-      this.exitGame();
+      this.countScore();
     }
     for (let i = 0; i < this.data.anslist.length; i++) {
       if (e.currentTarget.id == "A") {
