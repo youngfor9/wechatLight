@@ -1,4 +1,8 @@
 <view>
+    <view class='progress_box'>
+      <canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
+      <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
+    </view>
   <view class='title-view-class'>
     <label class='title-label-class'>第{{titleNum}}题</label>
   </view>
@@ -10,10 +14,5 @@
       {{item.letter+":"+item.content}}</button>
   </block>
   <button class='exitGame_class' bindtap='exitGame'>退出</button>
-  <view class="container">
-    <view class='progress_box'>
-      <canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
-      <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
-    </view>
-  </view>
+ 
 </view>

@@ -23,7 +23,6 @@ Page({
     var param ={
       "did":10
     }
-    process.count();
    var _this =this
     wx.request({
       url: 'https://47.98.216.184/dialogue/selectDialogueById',
@@ -50,7 +49,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    process.drawProgressbg();
+    process.count();
   },
 
   /**
