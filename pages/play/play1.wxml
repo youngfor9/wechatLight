@@ -1,5 +1,5 @@
 <view>
-    <view class='progress_box'>
+    <view class='progress_box'  hidden="{{progress_hidden}}">
       <canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
       <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
     </view>

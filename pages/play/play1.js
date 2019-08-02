@@ -1,8 +1,9 @@
 // pages/play/play1.js
 const content = '\n三年又三年'
-const titleNum =1
+const titleNum = 1
 var process = require("../play/process.js");
-
+const autoId = "A";
+const score =0;
 Page({
   /**
    * 页面的初始数据
@@ -10,36 +11,38 @@ Page({
   data: {
     content: content,
     anslist: [{ id: 1, letter: "A", content: "鬼子来了" },
-      { id: 2, letter: "B", content: "精武门" },
-      { id: 3, letter: "C", content: "斗牛" },
-      { id: 4, letter: "D", content: "神话" }],
-      titleNum: 1
+    { id: 2, letter: "B", content: "精武门" },
+    { id: 3, letter: "C", content: "斗牛" },
+    { id: 4, letter: "D", content: "神话" }],
+    titleNum: 1,
+    res:["A","A","A"],
+    score:0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    var param ={
-      "did":10
+    var param = {
+      "did": 10
     }
-   var _this =this
+    var _this = this
     wx.request({
       url: 'https://47.98.216.184/dialogue/selectDialogueById',
-      method:'GET',
-      data:param,
-      header:{
-        'content-type':'application/json'
+      method: 'GET',
+      data: param,
+      header: {
+        'content-type': 'application/json'
       },
-      success:function(res){
-          console.info("已经请求了："+res);
-          var restr = JSON.stringify(res);
-          var rejson =JSON.parse(restr);
-          _this.setData({
-            'content': rejson.data.dContent
-          })
+      success: function (res) {
+        console.info("已经请求了：" + res);
+        var restr = JSON.stringify(res);
+        var rejson = JSON.parse(restr);
+        _this.setData({
+          'content': rejson.data.dContent
+        })
       },
-      fail:function(res){
+      fail: function (res) {
         console.log("--fail--");
       }
     })
@@ -49,76 +52,138 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    process.count();
+    this.countDown();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
   onReachBottom: function () {
-  
+
   },
 
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   },
-  exitGame:function(e){
+  exitGame: function (e) {
     wx.switchTab({
       url: '../index/index'
     })
   },
-  countScore:function(e){
-    this.data
-  },
-  nextQuestion:function (e) {
-    this.data.titleNum = this.data.titleNum + 1;
-    console.info(e.currentTarget.id)
-    if(this.data.titleNum>10){
-      this.countScore();
-    }
-    for (let i = 0; i < this.data.anslist.length; i++) {
-      if (e.currentTarget.id == "A") {
-        this.data.anslist[i].checked = true;
-      }
-      else {
-        //其他的位置为false
-        this.data.anslist[i].checked = false;
-      }
-    }
-  
-    this.setData({
-       titleNum: this.data.titleNum,
+  toScore: function (score) {
+    console.info("---"+score);
+    wx.redirectTo({
+      url: '../res/res?score=' + score
     })
+  },
+  nextQuestion: function (e) {
+    console.info(e.currentTarget.id);
+    this.showCount(e.currentTarget.id);
+  },
+  showCount: function (id) {
+    if (this.data.titleNum > 1) {
+      this.toScore(this.data.score);
+    } else {
+      for (let i = 0; i < this.data.res.length; i++) {
+        if (id == this.data.res[i]) {
+          this.data.score = this.data.score + 10;
+        }
+      }
+      this.setData({
+        titleNum: this.data.titleNum + 1,
+      })
+      this.countDown();
+    }
+  },
+
+  countDown: function () {
+    var _this = this;
+    var step = 1,//计数动画次数
+      num = 0,//计数倒计时秒数（n - num）
+      start = 1.5 * Math.PI,// 开始的弧度
+      end = -0.5 * Math.PI,// 结束的弧度
+      time = null;// 计时器容器
+
+    var animation_interval = 1000,// 每1秒运行一次计时器
+      n = 2; // 当前倒计时为10秒
+    // 动画函数
+    function animation() {
+      if (step <= n) {
+        end = end + 2 * Math.PI / n;
+        ringMove(start, end);
+        step++;
+      } else {
+        clearInterval(time);
+        _this.showCount(autoId);
+      }
+    };
+    // 画布绘画函数
+    function ringMove(s, e) {
+      var context = wx.createCanvasContext('secondCanvas')
+
+      var gradient = context.createLinearGradient(200, 100, 100, 200);
+      gradient.addColorStop("0", "#1cc955");
+      gradient.addColorStop("0.5", "#1cc955");
+      gradient.addColorStop("1.0", "#1cc955");
+
+      // 绘制圆环
+      context.setStrokeStyle('#1cc955')
+      context.beginPath()
+      context.setLineWidth(8)
+      context.arc(42, 42, 30, s, e, true)
+      context.stroke()
+      context.closePath()
+
+      // 绘制倒计时文本
+      context.beginPath()
+      context.setLineWidth(1)
+      context.setFontSize(30)
+      context.setFillStyle('#1cc955')
+      context.setTextAlign('center')
+      context.setTextBaseline('middle')
+      context.fillText(n - num + '', 42, 42, 30)
+      context.fill()
+      context.closePath()
+
+      context.draw()
+
+      // 每完成一次全程绘制就+1
+      num++;
+    }
+    // 倒计时前先绘制整圆的圆环
+    ringMove(start, end);
+    // 创建倒计时
+    time = setInterval(animation, animation_interval);
   }
 })

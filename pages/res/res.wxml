@@ -1,0 +1,6 @@
+<view>
+  <view class='score-class'>
+    <label class='score-label-class'>恭喜你的总分是{{score}}</label>
+ </view>
+  <button class='exitGame_class' bindtap='exitGame'>退出</button>
+</view>
