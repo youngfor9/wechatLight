@@ -1,28 +1,45 @@
 // pages/play/play1.js
 const content = '\n三年又三年'
-const titleNum = 1
 var process = require("../play/process.js");
 const autoId = "A";
-const score =0;
+const score = 0;
+const ansNum = 3;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     content: content,
-    anslist: [{ id: 1, letter: "A", content: "鬼子来了" },
-    { id: 2, letter: "B", content: "精武门" },
-    { id: 3, letter: "C", content: "斗牛" },
-    { id: 4, letter: "D", content: "神话" }],
+    anslist: [{
+        id: 1,
+        letter: "A",
+        content: "鬼子来了"
+      },
+      {
+        id: 2,
+        letter: "B",
+        content: "精武门"
+      },
+      {
+        id: 3,
+        letter: "C",
+        content: "斗牛"
+      },
+      {
+        id: 4,
+        letter: "D",
+        content: "神话"
+      }
+    ],
     titleNum: 1,
-    res:["A","A","A"],
-    score:0
+    res: ["A", "A", "A"],
+    score: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
+  onLoad: function(options) {
     var param = {
       "did": 10
     }
@@ -34,7 +51,7 @@ Page({
       header: {
         'content-type': 'application/json'
       },
-      success: function (res) {
+      success: function(res) {
         console.info("已经请求了：" + res);
         var restr = JSON.stringify(res);
         var rejson = JSON.parse(restr);
@@ -42,7 +59,7 @@ Page({
           'content': rejson.data.dContent
         })
       },
-      fail: function (res) {
+      fail: function(res) {
         console.log("--fail--");
       }
     })
@@ -51,92 +68,95 @@ Page({
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
-  onReady: function () {
+  onReady: function() {
     this.countDown();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
-  onShow: function () {
+  onShow: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
-  onHide: function () {
+  onHide: function() {
 
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
-  onUnload: function () {
+  onUnload: function() {
 
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
-  onPullDownRefresh: function () {
+  onPullDownRefresh: function() {
 
   },
 
   /**
    * 页面上拉触底事件的处理函数
    */
-  onReachBottom: function () {
+  onReachBottom: function() {
 
   },
 
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
+  onShareAppMessage: function() {
 
   },
-  exitGame: function (e) {
+  exitGame: function(e) {
     wx.switchTab({
       url: '../index/index'
     })
   },
-  toScore: function (score) {
-    console.info("---"+score);
+  toScore: function(score) {
+    console.info("---" + score);
     wx.redirectTo({
       url: '../res/res?score=' + score
     })
   },
-  nextQuestion: function (e) {
+  showNextQuestion:function(){
+    this.setData({
+      titleNum: this.data.titleNum + 1,
+    })
+    this.countDown();
+  },
+  nextQuestion: function(e) {
     console.info(e.currentTarget.id);
     this.showCount(e.currentTarget.id);
   },
-  showCount: function (id) {
-    if (this.data.titleNum > 1) {
+  showCount: function(id) {
+    var titleSort = this.data.titleNum;
+    console.info("--show--" + titleSort);
+    if (titleSort < this.data.res.length + 1 && id == this.data.res[titleSort - 1]) {
+      this.data.score = this.data.score + 10;
+    }
+    if (titleSort >= ansNum) {
       this.toScore(this.data.score);
     } else {
-      for (let i = 0; i < this.data.res.length; i++) {
-        if (id == this.data.res[i]) {
-          this.data.score = this.data.score + 10;
-        }
-      }
-      this.setData({
-        titleNum: this.data.titleNum + 1,
-      })
-      this.countDown();
+      this.showNextQuestion();
     }
   },
 
-  countDown: function () {
+  countDown: function() {
     var _this = this;
-    var step = 1,//计数动画次数
-      num = 0,//计数倒计时秒数（n - num）
-      start = 1.5 * Math.PI,// 开始的弧度
-      end = -0.5 * Math.PI,// 结束的弧度
-      time = null;// 计时器容器
+    var step = 1, //计数动画次数
+      num = 0, //计数倒计时秒数（n - num）
+      start = 1.5 * Math.PI, // 开始的弧度
+      end = -0.5 * Math.PI, // 结束的弧度
+      time = null; // 计时器容器
 
-    var animation_interval = 1000,// 每1秒运行一次计时器
-      n = 2; // 当前倒计时为10秒
+    var animation_interval = 1000, // 每1秒运行一次计时器
+      n = 1; // 当前倒计时为10秒
     // 动画函数
     function animation() {
       if (step <= n) {
@@ -145,7 +165,9 @@ Page({
         step++;
       } else {
         clearInterval(time);
-        _this.showCount(autoId);
+        if (_this.data.titleNum < ansNum + 1) {
+          _this.showCount(autoId);
+        }
       }
     };
     // 画布绘画函数
