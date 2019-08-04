@@ -4,6 +4,8 @@ var process = require("../play/process.js");
 const autoId = "A";
 const score = 0;
 const ansNum = 3;
+const titleNum =0;
+var app =getApp();
 Page({
   /**
    * 页面的初始数据
@@ -33,7 +35,8 @@ Page({
     ],
     titleNum: 1,
     res: ["A", "A", "A"],
-    score: 0
+    score: 0,
+    is_stop:false
   },
 
   /**
@@ -41,7 +44,7 @@ Page({
    */
   onLoad: function(options) {
     var param = {
-      "did": 10
+      "did": 2
     }
     var _this = this
     wx.request({
@@ -114,12 +117,12 @@ Page({
 
   },
   exitGame: function(e) {
-    wx.switchTab({
-      url: '../index/index'
-    })
+    this.data.is_stop = !this.data.is_stop;
+    app.exitGame();
   },
   toScore: function(score) {
     console.info("---" + score);
+    this.data.is_stop =true;
     wx.redirectTo({
       url: '../res/res?score=' + score
     })
@@ -132,41 +135,48 @@ Page({
   },
   nextQuestion: function(e) {
     console.info(e.currentTarget.id);
-    this.showCount(e.currentTarget.id);
+    this.judgeSelect(e.currentTarget.id);
   },
-  showCount: function(id) {
+  //显示选择题
+  judgeSelect: function(id) {
     var titleSort = this.data.titleNum;
     console.info("--show--" + titleSort);
     if (titleSort < this.data.res.length + 1 && id == this.data.res[titleSort - 1]) {
       this.data.score = this.data.score + 10;
     }
     if (titleSort >= ansNum) {
+      //计算分数
       this.toScore(this.data.score);
     } else {
+      //显示下一题
       this.showNextQuestion();
     }
   },
 
   countDown: function() {
+    
     var _this = this;
     var step = 1, //计数动画次数
       num = 0, //计数倒计时秒数（n - num）
       start = 1.5 * Math.PI, // 开始的弧度
       end = -0.5 * Math.PI, // 结束的弧度
       time = null; // 计时器容器
-
     var animation_interval = 1000, // 每1秒运行一次计时器
-      n = 1; // 当前倒计时为10秒
+      n = 3; // 当前倒计时为10秒
     // 动画函数
+    
     function animation() {
-      if (step <= n) {
+      if (step <= n ) {
         end = end + 2 * Math.PI / n;
         ringMove(start, end);
         step++;
       } else {
+        //自动显示下一题
         clearInterval(time);
-        if (_this.data.titleNum < ansNum + 1) {
-          _this.showCount(autoId);
+        console.info("titleNum:" + _this.data.titleNum);
+        if (_this.data.titleNum < ansNum + 1 && !_this.data.is_stop ) {
+          _this.judgeSelect(autoId);
+          //倒计时的问题待解决
         }
       }
     };
@@ -206,6 +216,6 @@ Page({
     // 倒计时前先绘制整圆的圆环
     ringMove(start, end);
     // 创建倒计时
-    time = setInterval(animation, animation_interval);
+      time = setInterval(animation, animation_interval);
   }
 })

@@ -35,5 +35,10 @@ App({
   },
   globalData: {
     userInfo: null
+  },
+  exitGame: function (e) {
+    wx.switchTab({
+      url: '../index/index'
+    })
   }
 })

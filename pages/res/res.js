@@ -1,11 +1,13 @@
 // pages/play/play1.js
 const score = 0;
+var app = getApp();
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    score: score
+    score: score,
+    rank:"影迷"
   },
 
   /**
@@ -35,7 +37,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-
+    
   },
 
   /**
@@ -57,5 +59,8 @@ Page({
    */
   onReachBottom: function () {
 
+  },
+  exitGame: function (e) {
+   app.exitGame();
   }
 })
