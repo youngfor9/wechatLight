@@ -1,5 +1,5 @@
 <view>
-    <view class='progress_box'  hidden="{{progress_hidden}}">
+    <view class='progress_box '  hidden="{{progress_hidden}}"  mode="widthFix">
       <canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
       <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
     </view>
@@ -11,7 +11,8 @@
   </view>
   <block wx:for="{{anslist}}" class="anslist-class">
     <button class='ans-class' bindtap='nextQuestion' id='{{item.letter}}'>
-      {{item.letter+":"+item.content}}</button>
+      <!--{{item.letter+":"+item.content}}</button>-->
+      {{item.content}}</button>
   </block>
   <button class='exitGame_class' bindtap='exitGame'>退出</button>
  

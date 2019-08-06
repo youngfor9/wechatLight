@@ -36,7 +36,8 @@ Page({
     titleNum: 1,
     res: ["A", "A", "A"],
     score: 0,
-    is_stop:false
+    is_stop:false,
+    contentArr:null
   },
 
   /**
@@ -44,22 +45,24 @@ Page({
    */
   onLoad: function(options) {
     var param = {
-      "did": 2
+      "num": 3 
     }
     var _this = this
     wx.request({
-      url: 'https://47.98.216.184/dialogue/selectDialogueById',
+      url: 'https://47.98.216.184/dialogue/getDialogueInfos',
       method: 'GET',
       data: param,
       header: {
         'content-type': 'application/json'
       },
       success: function(res) {
-        console.info("已经请求了：" + res);
         var restr = JSON.stringify(res);
-        var rejson = JSON.parse(restr);
+        console.info("已经请求了：" + restr);
+        var jsonObj = JSON.parse(restr);
         _this.setData({
-          'content': rejson.data.dContent
+          'contentArr': jsonObj.data,
+          content: jsonObj.data[0].info.content,
+          anslist: jsonObj.data[0].ans
         })
       },
       fail: function(res) {
@@ -72,6 +75,7 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
+   
     this.countDown();
   },
 
@@ -130,6 +134,14 @@ Page({
   showNextQuestion:function(){
     this.setData({
       titleNum: this.data.titleNum + 1,
+    })
+    //内容
+    console.info("content.size:" + this.data.titleNum);
+    var contentJson = this.data.contentArr[this.data.titleNum-1];
+     console.info("contentJson:" + contentJson);
+    this.setData({
+      content:contentJson.info.content,
+      anslist:contentJson.ans
     })
     this.countDown();
   },
