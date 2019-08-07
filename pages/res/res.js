@@ -7,7 +7,8 @@ Page({
    */
   data: {
     score: score,
-    rank:"影迷"
+    rank: "影迷",
+    base64ImgUrl: "/back.jpeg"
   },
 
   /**
@@ -37,7 +38,7 @@ Page({
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-    
+
   },
 
   /**
@@ -61,6 +62,18 @@ Page({
 
   },
   exitGame: function (e) {
-   app.exitGame();
+    app.exitGame();
+  },
+  getBase64ImageUrl: function () {
+    /// 获取到base64Data
+    var base64Data = '/back.jpg';
+    /// 通过微信小程序自带方法将base64转为二进制去除特殊符号，再转回base64
+    base64Data = wx.arrayBufferToBase64(wx.base64ToArrayBuffer(base64Data));
+    /// 拼接请求头，data格式可以为image/png或者image/jpeg等，看需求
+    const base64ImgUrl = "data:image/png;base64," + base64Data;
+    /// 刷新数据
+    this.setData({
+      base64ImgUrl: base64ImgUrl
+    })
   }
 })

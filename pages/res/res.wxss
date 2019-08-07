@@ -1,1 +1,27 @@
 /* pages/res/res.wxss */
+.bg{
+width: 100%; height: 30%; background-size: 100% 100%; background-repeat: no-repeat; 
+}
+.res{
+ position: fixed;
+
+height: 100%;
+
+width: 100%;
+
+display:flex;
+
+flex-direction:column; /*纵向显示*/
+
+align-items:center;/*垂直居中*/
+
+justify-content: center;/*水平居中*/
+}
+.rank-label-class{
+ margin-left: 55%;
+  margin-top: 2%;
+}
+.score-label-class{
+ margin-left: 55%;
+ margin-top: 15%;
+}

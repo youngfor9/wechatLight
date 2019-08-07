@@ -1,8 +1,9 @@
-<view>
-  <view class='score-class'>
-    <label class='score-label-class'>恭喜你的本轮成绩是{{score}}分</label>
-    <label class='score-label-class'>恭喜你的总得分是{{score}}分</label>
-    <label class='score-label-class'>当前的头衔为{{rank}}</label>
+<page class="res">
+ <view class="bg" style='background-image: url({{base64ImgUrl}});'>
+      <view class='score-label-class'><label>{{score}}</label></view>
+    <view class='rank-label-class'> <label>{{rank}}</label></view>
  </view>
+
   <button class='exitGame_class' bindtap='exitGame'>退出</button>
-</view>
+
+</page>
