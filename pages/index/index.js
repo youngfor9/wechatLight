@@ -9,8 +9,8 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     mode: 'scaleToFill',
-    src: '../../../resources/cat.jpg',
-    title_image:'../../../resources/title.jpg'
+    background:"pages/image/background.jpg",
+    title_image:"pages/image/title.jpg"
   },
   //事件处理函数
   bindViewTap: function() {
@@ -19,6 +19,7 @@ Page({
     })
   },
   onLoad: function () {
+    this.showBackBround();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
@@ -62,5 +63,16 @@ Page({
       wx.navigateTo({
       url:'../play/play1'
     })
+  },
+  showBackBround:function(){
+    var that = this;
+    let bgImage = wx.getFileSystemManager().readFileSync(that.data.background, 'base64')
+;
+    let titleImage =  wx.getFileSystemManager().readFileSync(that.data.title_image, 'base64')
+    console
+    that.setData({
+      'background': 'data:image/jpg;base64,' + bgImage,
+      'title_image': 'data:image/jpg;base64,' + titleImage
+    });
   }
 })

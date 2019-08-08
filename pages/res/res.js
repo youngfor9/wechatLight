@@ -8,13 +8,15 @@ Page({
   data: {
     score: score,
     rank: "影迷",
-    base64ImgUrl: "/back.jpeg"
+    res_image: "pages/res/back.jpg",
+    animationData: {}
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    this.getBase64ImageUrl();
     this.setData({
       score: e.score
     });
@@ -24,7 +26,8 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-
+    this.init_animation();
+    this.rotateThenScale();
   },
 
   /**
@@ -65,15 +68,38 @@ Page({
     app.exitGame();
   },
   getBase64ImageUrl: function () {
-    /// 获取到base64Data
-    var base64Data = '/back.jpg';
+    var _this =this;
     /// 通过微信小程序自带方法将base64转为二进制去除特殊符号，再转回base64
-    base64Data = wx.arrayBufferToBase64(wx.base64ToArrayBuffer(base64Data));
-    /// 拼接请求头，data格式可以为image/png或者image/jpeg等，看需求
-    const base64ImgUrl = "data:image/png;base64," + base64Data;
+    let bgImage = wx.getFileSystemManager().readFileSync(_this.data.res_image, 'base64')
     /// 刷新数据
-    this.setData({
-      base64ImgUrl: base64ImgUrl
+    _this.setData({
+      res_image: 'data:image/jpg;base64,' + bgImage
     })
-  }
+  },
+  rotateThenScale: function () {
+    this.animation.rotate(360).step()
+      .scale(1).step()
+    this.setData({ animation: this.animation.export() })
+  },
+  init_animation: function () {
+    var animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease',
+    })
+
+    this.animation = animation
+
+    animation.scale(2, 2).rotate(45).step()
+
+    this.setData({
+      animationData: animation.export()
+    })
+
+    setTimeout(function () {
+      animation.translate(30).step()
+      this.setData({
+        animationData: animation.export()
+      })
+    }.bind(this), 1000)
+  },
 })

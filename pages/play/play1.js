@@ -12,26 +12,7 @@ Page({
    */
   data: {
     content: content,
-    anslist: [{
-        id: 1,
-        letter: "A",
-        content: "鬼子来了"
-      },
-      {
-        id: 2,
-        letter: "B",
-        content: "精武门"
-      },
-      {
-        id: 3,
-        letter: "C",
-        content: "斗牛"
-      },
-      {
-        id: 4,
-        letter: "D",
-        content: "神话"
-      }
+    anslist: [
     ],
     titleNum: 1,
     res: ["A", "A", "A"],

@@ -1,5 +1,5 @@
 <page class="res">
- <view class="bg" style='background-image: url({{base64ImgUrl}});'>
+ <view class="bg" style='background-image: url({{res_image}})' animation="{{animation}}">
       <view class='score-label-class'><label>{{score}}</label></view>
     <view class='rank-label-class'> <label>{{rank}}</label></view>
  </view>
