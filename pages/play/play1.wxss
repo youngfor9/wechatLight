@@ -94,3 +94,7 @@ bottom: 0px;
   margin-left: 8%;
   margin-top: 5%;
 }
+.car-class{
+  width: 40px;
+  height: 25px;
+}

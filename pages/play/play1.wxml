@@ -4,6 +4,7 @@
       <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
     </view>
     <image class='view-class' src="{{view}}" mode="scaleToFill"></image>
+        <image class='car-class' src="{{car}}" ></image>
   <view class='title-view-class'>
     <label class='title-label-class'>第{{titleNum}}题</label>
   </view>

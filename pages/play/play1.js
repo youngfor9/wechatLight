@@ -39,7 +39,8 @@ Page({
     score: 0,
     contentArr: null,
     time: null,
-    view: "pages/image/view1.gif"
+    view: "pages/image/view1.gif",
+    car: "pages/image/car.jpg"
   },
 
   /**
@@ -227,8 +228,10 @@ Page({
   showBackBround: function () {
     var that = this;
     let bgImage = wx.getFileSystemManager().readFileSync(that.data.view, 'base64')
+    let carImage = wx.getFileSystemManager().readFileSync(that.data.car, 'base64')
     that.setData({
-      'view': 'data:image/jpg;base64,' + bgImage
+      'view': 'data:image/jpg;base64,' + bgImage,
+      'car': 'data:image/jpg;base64,' + carImage
     });
   }
 })
