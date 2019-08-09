@@ -1,3 +1,6 @@
+page{
+  font-family: "PingFangSC-Thin"
+}
 /* pages/play/play1.wxss */
 .title-label-class{
 margin-left:auto;
@@ -27,15 +30,15 @@ text-align: center
   align-items: center;
   justify-content: center;
 }
-.anslist-class{
-  margin-top: 20%;
-}
 .question-class{
   margin-top: 10%;
   text-align: center;
-  margin-left: 5%;
+  margin-left: 16%;
   margin-bottom: 10%;
-  
+  height:150px;
+  width: 70%;
+  font-weight:bold; 
+  font-family:"新细明体"; 
 }
 .exitGame_class{
 position: absolute;
@@ -76,4 +79,18 @@ bottom: 0px;
   width:84px;
   height: 84px; 
   margin:auto;
+}
+.text-class{
+   z-index: 1;
+   text-indent:2em;
+   text-align:left ;
+}
+.view-class{
+  display:flex;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+  position: fixed;
+  z-index: -1;
+  margin-left: 8%;
+  margin-top: 5%;
 }
