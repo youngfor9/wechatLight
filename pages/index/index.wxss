@@ -54,6 +54,8 @@ font-family: "PingFangSC-Thin"
   flex-direction: row;
   align-items: center;
   justify-content: center;
+   font-weight: bold;
+   font-family: '微软雅黑';
 }
 .start_class::after {
   border-radius: 98rpx;

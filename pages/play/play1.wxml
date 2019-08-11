@@ -1,21 +1,18 @@
 <view>
+    <image class='play-view-class' src="{{playView}}" mode="scaleToFill"></image>
     <view class='progress_box '  hidden="{{progress_hidden}}"  mode="widthFix">
-      <canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>
+     <!--<canvas class="progress_bg" canvas-id="canvasProgressbg"> </canvas>-->
       <canvas class="progress_canvas" canvas-id="secondCanvas"></canvas>
     </view>
     <image class='view-class' src="{{view}}" mode="scaleToFill"></image>
-        <image class='car-class' src="{{car}}" ></image>
-  <view class='title-view-class'>
-    <label class='title-label-class'>第{{titleNum}}题</label>
-  </view>
+     <image class='car-class' src="{{car}}" animation="{{animation}}"></image>
+    <label class='title-label-class' hidden="{{isHide}}">第{{titleNum}}题</label>
   <view class='question-class' >
     <view class="text-class">{{content}}</view>
   </view>
   <block wx:for="{{anslist}}" class="anslist-class">
-    <button class='ans-class' bindtap='nextQuestion' id='{{item.letter}}'>
+    <button class='ans-class' bindtap='nextQuestion' id='{{item.id}}'>
       <!--{{item.letter+":"+item.content}}</button>-->
       {{item.content}}</button>
   </block>
-  <button class='exitGame_class' bindtap='exitGame'>退出</button>
- 
 </view>

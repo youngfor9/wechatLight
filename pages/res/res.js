@@ -8,7 +8,8 @@ Page({
   data: {
     score: score,
     rank: "影迷",
-    res_image: "pages/res/back.jpg",
+  //  res_image: "pages/res/back.jpg",
+    txtImage: "pages/image/txt.jpg",
     animationData: {}
   },
 
@@ -70,10 +71,14 @@ Page({
   getBase64ImageUrl: function () {
     var _this =this;
     /// 通过微信小程序自带方法将base64转为二进制去除特殊符号，再转回base64
-    let bgImage = wx.getFileSystemManager().readFileSync(_this.data.res_image, 'base64')
+    //let bgImage = wx.getFileSystemManager().readFileSync(_this.data.res_image, 'base64')
+    //let playImage = wx.getFileSystemManager().readFileSync(_this.data.playView, 'base64')
+    let txtImage = wx.getFileSystemManager().readFileSync(_this.data.txtImage, 'base64')
+
     /// 刷新数据
     _this.setData({
-      res_image: 'data:image/jpg;base64,' + bgImage
+     // res_image: 'data:image/jpg;base64,' + bgImage,
+      txtImage: 'data:image/jpg;base64,' + txtImage,
     })
   },
   rotateThenScale: function () {

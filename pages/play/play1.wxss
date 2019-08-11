@@ -3,10 +3,8 @@ page{
 }
 /* pages/play/play1.wxss */
 .title-label-class{
-margin-left:auto;
-margin-right:auto;
-color: #787878;
-font-size: 30px;
+font-size: 20px;
+margin-left: 30%;
 }
 
 .title-view-class{
@@ -18,6 +16,9 @@ text-align: center
   color: white;
   font-size: 20px;
   font-weight: bold;
+}
+.anslist-class{
+  margin-top: 5%;
 }
 .ans-class{
  background-color: cornflowerblue;
@@ -31,11 +32,11 @@ text-align: center
   justify-content: center;
 }
 .question-class{
-  margin-top: 10%;
+  margin-top: 5%;
   text-align: center;
-  margin-left: 16%;
-  margin-bottom: 10%;
-  height:150px;
+  margin-left: 18%;
+  margin-bottom: 48%;
+  height:20px;
   width: 70%;
   font-weight:bold; 
   font-family:"新细明体"; 
@@ -56,7 +57,7 @@ bottom: 0px;
 .ans-class:active {
 	position: relative;
 	top: 2px;
-  background-color: #3366FF; 
+  background-color: #424242; 
   color:#D0D0D0; 
 }
 /**倒计时**/
@@ -71,7 +72,7 @@ bottom: 0px;
   border-radius: 84px;
 } */
 .progress_bg{
-  position: absolute;
+  position: relative;
   width:84px;
   height: 84px; 
 }
@@ -81,7 +82,6 @@ bottom: 0px;
   margin:auto;
 }
 .text-class{
-   z-index: 1;
    text-indent:2em;
    text-align:left ;
 }
@@ -89,12 +89,22 @@ bottom: 0px;
   display:flex;
   align-items:center;/*垂直居中*/
   justify-content: center;/*水平居中*/
-  position: fixed;
-  z-index: -1;
+  position: absolute;
   margin-left: 8%;
-  margin-top: 5%;
+  margin-top: 3%;
 }
 .car-class{
   width: 40px;
   height: 25px;
+}
+.play-view-class{
+ position: fixed;
+  height: 100%;
+  width: 100%;
+  display:flex;
+  flex-direction:column;
+  align-items:center;/*垂直居中*/
+  justify-content: center;/*水平居中*/
+  z-index: -1;
+  opacity:0.6;
 }

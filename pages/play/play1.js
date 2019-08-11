@@ -1,18 +1,21 @@
 // pages/play/play1.js
 const content = '\n三年又三年'
 var process = require("../play/process.js");
-const autoId = "A";
+const autoId = 0;
 const score = 0;
 const ansNum = 3;
 const titleNum = 0;
 const time = null;
 var app = getApp();
+var carTime = 3000
+var animation ={};
 Page({
   /**
    * 页面的初始数据
    */
   data: {
     content: content,
+    ansIds:[],
     anslist: [{
         id: 1,
         letter: "A",
@@ -35,12 +38,15 @@ Page({
       }
     ],
     titleNum: 1,
-    res: ["A", "A", "A"],
+    resIds: "",
     score: 0,
     contentArr: null,
     time: null,
     view: "pages/image/view1.gif",
-    car: "pages/image/car.jpg"
+    car: "pages/image/car.jpg",
+    playView: "pages/image/play3.jpg",
+    animation: wx.createAnimation(),
+    isHide: true
   },
 
   /**
@@ -63,9 +69,10 @@ Page({
         console.info("已经请求了：" + restr);
         var jsonObj = JSON.parse(restr);
         _this.setData({
-          'contentArr': jsonObj.data,
+          contentArr: jsonObj.data,
           content: jsonObj.data[0].info.content,
-          anslist: jsonObj.data[0].ans
+          anslist: jsonObj.data[0].ans,
+          ansIds: _this.data.ansIds+","+jsonObj.data[0].info.aId
         })
       },
       fail: function(res) {
@@ -78,7 +85,8 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-
+    this.animation = wx.createAnimation();
+    this.initCar();
     this.countDown();
   },
 
@@ -127,35 +135,47 @@ Page({
     app.exitGame();
   },
   toScore: function(score) {
+    
     console.info("---" + score);
     wx.redirectTo({
       url: '../res/res?score=' + score
     })
   },
   showNextQuestion: function() {
-    this.setData({
-      titleNum: this.data.titleNum + 1,
-    })
+    var _this= this;
     //内容
     console.info("content.size:" + this.data.titleNum);
     var contentJson = this.data.contentArr[this.data.titleNum - 1];
     console.info("contentJson:" + contentJson);
     this.setData({
       content: contentJson.info.content,
-      anslist: contentJson.ans
+      anslist: contentJson.ans,
+      'titleNum': _this.data.titleNum + 1,
     })
     this.countDown();
   },
   nextQuestion: function(e) {
-    console.info(e.currentTarget.id);
+    console.info("sle"+e.currentTarget.id);
     clearInterval(this.data.time);
     this.judgeSelect(e.currentTarget.id);
   },
   //显示选择题
   judgeSelect: function(id) {
+   var ids = this.data.resIds;
+   console.info("ids:"+ids);
+    if (ids!= ""){
+       ids =  ids+ id + ",";
+    }else{
+       ids = id + ",";
+    }
+    this.setData({
+      resIds:ids
+    })
+    console.info("ansIds:"+this.data.ansIds);
+    console.info("selectId:"+id);
     var titleSort = this.data.titleNum;
     console.info("--show--" + titleSort);
-    if (titleSort < this.data.res.length + 1 && id == this.data.res[titleSort - 1]) {
+    if (true) {
       this.data.score = this.data.score + 10;
     }
     if (titleSort >= ansNum) {
@@ -170,7 +190,9 @@ Page({
   countDown: function() {
     var time = this.data.time;
     var _this = this;
-    var v=10,step = 10, //计数动画次数
+    this.initCar();
+    var v = 10,
+      step = 10, //计数动画次数
       num = 0, //计数倒计时秒数（n - num）
       start = 1.5 * Math.PI, // 开始的弧度
       end = -0.5 * Math.PI; // 结束的弧度
@@ -186,7 +208,7 @@ Page({
         //自动显示下一题
         clearInterval(_this.data.time);
         console.info("titleNum:" + _this.data.titleNum);
-        if (_this.data.titleNum < ansNum + 1 ) {
+        if (_this.data.titleNum < ansNum + 1) {
           _this.judgeSelect(autoId);
         }
       }
@@ -202,7 +224,6 @@ Page({
       context.arc(42, 42, 30, s, e, true)
       context.stroke()
       context.closePath()
-      console.info("n:"+n);
       // 绘制倒计时文本
       context.beginPath()
       context.setLineWidth(1)
@@ -220,18 +241,51 @@ Page({
     // 倒计时前先绘制整圆的圆环
     ringMove(start, end);
     // 创建倒计时
-    //time = setInterval(animation, animation_interval);
+    time = setInterval(animation, animation_interval);
     _this.setData({
       time: time
     })
   },
-  showBackBround: function () {
+  showBackBround: function() {
     var that = this;
     let bgImage = wx.getFileSystemManager().readFileSync(that.data.view, 'base64')
     let carImage = wx.getFileSystemManager().readFileSync(that.data.car, 'base64')
+    let playImage = wx.getFileSystemManager().readFileSync(that.data.playView, 'base64')
     that.setData({
       'view': 'data:image/jpg;base64,' + bgImage,
-      'car': 'data:image/jpg;base64,' + carImage
+      'car': 'data:image/jpg;base64,' + carImage,
+      'playView': 'data:image/jpg;base64,' + playImage
     });
+  },
+  initCar: function() {
+    this.resetAnimation();
+   this.animation.translateX(300).scale(2).step({
+      "duration": carTime,
+      "delay":300,
+      "timingFunction": "ease"
+    })
+    this.setData({
+      animation: this.animation.export()
+    })
+    this.seTimer();
+  },
+  seTimer: function() {
+    var that = this;
+    var timer = setTimeout(function() {
+      that.setData({
+        'isHide': false,
+      });
+    }, 1800);
+  },
+  resetAnimation: function() {
+  var  _this =this
+    this.animation.translateX(0).scale(0)
+      .step({
+        duration: 0
+      })
+    this.setData({
+      animation: this.animation.export(),
+      isHide:true,
+    })
   }
 })
