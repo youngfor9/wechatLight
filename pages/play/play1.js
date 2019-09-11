@@ -4,11 +4,12 @@ var process = require("../play/process.js");
 const autoId = 0;
 const score = 0;
 const ansNum = 3;
-const titleNum = 0;
+const titleNum = 1;
 const time = null;
 var app = getApp();
 var carTime = 3000
 var animation ={};
+const que_size =3;
 Page({
   /**
    * 页面的初始数据
@@ -16,29 +17,10 @@ Page({
   data: {
     content: content,
     ansIds:[],
-    anslist: [{
-        id: 1,
-        letter: "A",
-        content: "鬼子来了"
-      },
-      {
-        id: 2,
-        letter: "B",
-        content: "精武门"
-      },
-      {
-        id: 3,
-        letter: "C",
-        content: "斗牛"
-      },
-      {
-        id: 4,
-        letter: "D",
-        content: "神话"
-      }
+    anslist: [
     ],
     titleNum: 1,
-    resIds: "",
+    selectIdsRes: "",
     score: 0,
     contentArr: null,
     time: null,
@@ -72,7 +54,7 @@ Page({
           contentArr: jsonObj.data,
           content: jsonObj.data[0].info.content,
           anslist: jsonObj.data[0].ans,
-          ansIds: _this.data.ansIds+","+jsonObj.data[0].info.aId
+          ansIds: jsonObj.data[0].info.aId
         })
       },
       fail: function(res) {
@@ -134,19 +116,47 @@ Page({
   exitGame: function(e) {
     app.exitGame();
   },
+  ////[{
+  //   "que":“这是”，
+  //   "ans": 霸王别姬，
+  //   "sort":1，
+  //   "true":false
+  // }]
   toScore: function(score) {
-    
-    console.info("---" + score);
+    var arr = this.data.contentArr;
+    var sir = this.data.selectIdsRes;
+    var sirArr = sir.split(",");
+    var data_arr = new Array(); 
+    for (var i in arr) {
+      var data_map = new Map();
+      console.info(i+"----"+arr[i]);
+      var aId = arr[i].info.aId;
+      data_map.que = arr[i].info.content;
+      for (var j = 0, len = arr[i].ans.length; j < len; j++) {
+        var ans_obj = arr[i].ans[j];
+        var ans_id = ans_obj.id;
+        var ans_content = ans_obj.content;
+        console.info("res---ans_id:" + ans_id +",aId--"+aId);
+        if (ans_id == aId){
+          data_map.ans= ans_content;
+          data_map.sort= i;
+          data_map.true=sirArr[j];
+        }
+      }
+      data_arr.push(data_map);
+    }
+    console.info("---" + JSON.stringify(data_arr));
     wx.redirectTo({
-      url: '../res/res?score=' + score
+      url: '../res/res?data=' + JSON.stringify(data_arr)
     })
   },
-  showNextQuestion: function() {
+  showNextQuestion: function(id) {
     var _this= this;
     //内容
     console.info("content.size:" + this.data.titleNum);
-    var contentJson = this.data.contentArr[this.data.titleNum - 1];
+    var contentJson = this.data.contentArr[this.data.titleNum];
     console.info("contentJson:" + contentJson);
+
     this.setData({
       content: contentJson.info.content,
       anslist: contentJson.ans,
@@ -155,26 +165,25 @@ Page({
     this.countDown();
   },
   nextQuestion: function(e) {
-    console.info("sle"+e.currentTarget.id);
     clearInterval(this.data.time);
     this.judgeSelect(e.currentTarget.id);
   },
   //显示选择题
   judgeSelect: function(id) {
-   var ids = this.data.resIds;
-   console.info("ids:"+ids);
-    if (ids!= ""){
-       ids =  ids+ id + ",";
+    var sir = this.data.selectIdsRes;
+    console.info("sir:" + sir);
+    var contentJson = this.data.contentArr[this.data.titleNum - 1];
+   var cid= contentJson.info.aId;
+    console.info("selectId:"+id+",cid:"+cid);
+    var titleSort = this.data.titleNum;
+    if (sir!=null){
+      sir = sir+(cid == id)+","
     }else{
-       ids = id + ",";
+      sir = (cid == id) + ","
     }
     this.setData({
-      resIds:ids
+      selectIdsRes: sir
     })
-    console.info("ansIds:"+this.data.ansIds);
-    console.info("selectId:"+id);
-    var titleSort = this.data.titleNum;
-    console.info("--show--" + titleSort);
     if (true) {
       this.data.score = this.data.score + 10;
     }
@@ -183,7 +192,7 @@ Page({
       this.toScore(this.data.score);
     } else {
       //显示下一题
-      this.showNextQuestion();
+      this.showNextQuestion(id);
     }
   },
 

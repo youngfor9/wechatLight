@@ -18,14 +18,30 @@ Page({
       url: '../logs/logs'
     })
   },
+  // 设置转发
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    return {
+      title: '大家一起来玩猜台词，唤醒沉睡的记忆！',
+      path: '/index/index'
+    }
+  },
   onLoad: function () {
+    console.info("user--" + this.data.userInfo.nickName);
     this.showBackBround();
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
-    } else if (this.data.canIUse){
+    } else if (this.data.userInfo.nickName!=undefined){
+      this.setData({
+        hasUserInfo: true
+      })
+    }else if (this.data.canIUse){
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
@@ -41,24 +57,27 @@ Page({
           app.globalData.userInfo = res.userInfo
           this.setData({
             userInfo: res.userInfo,
-            hasUserInfo: true
           })
         }
       })
     }
   },
-  getUserInfo: function(e) {
-    console.log(e)
-    app.globalData.userInfo = e.detail.userInfo
-    this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
-    })
+  //程序启动后调用
+  onLaunch: function () {
+    this.canIUse();
   },
-  clickMe() {
-    this.setData({ msg: 'Hello World' })
+  getUserInfo: function(e) {
+    app.globalData.userInfo = e.detail.userInfo
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: e.detail.userInfo,
+        hasUserInfo: true
+      })
+    }
+   
   },
   toPlay:function(e){
+    this.getUserInfo();
     getCurrentPages().pop(),
       wx.navigateTo({
       url:'../play/play1'

@@ -30,7 +30,7 @@ font-family: "PingFangSC-Thin"
 }
 
 .userinfo-nickname {
-  color: #aaa;
+  color:white;
 }
 
 .usermotto {

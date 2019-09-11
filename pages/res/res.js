@@ -1,16 +1,19 @@
 // pages/play/play1.js
 const score = 0;
 var app = getApp();
+var data=null;
 Page({
   /**
    * 页面的初始数据
    */
   data: {
-    score: score,
+    data: data,
     rank: "影迷",
   //  res_image: "pages/res/back.jpg",
     txtImage: "pages/image/txt.jpg",
-    animationData: {}
+    animationData: {},
+    que:"",
+    ans:""
   },
 
   /**
@@ -18,9 +21,15 @@ Page({
    */
   onLoad: function (e) {
     this.getBase64ImageUrl();
+    var data = JSON.parse(e.data)
+    console.info("data:" + data[0]);
     this.setData({
-      score: e.score
+      data: data,
+      que:data[0].que,
+      ans:data[0].ans
     });
+    console.info("res:" +this.data.que);
+    console.info("res2:" + this.data.ans);
   },
 
   /**

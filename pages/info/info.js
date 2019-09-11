@@ -1,66 +1,91 @@
-// pages/info/info.js
+//index.js
+//获取应用实例
+const app = getApp()
 Page({
-
-  /**
-   * 页面的初始数据
-   */
   data: {
-  
+    motto: 'Hello-World',
+    userInfo: {},
+    hasUserInfo: false,
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
+    mode: 'scaleToFill',
+    background: "pages/image/background.jpg",
+    mostScore:10,
+    rank:5,
+    lackScore:10,
+    totalScore:100,
+    textHide:true,
   },
-
-  /**
-   * 生命周期函数--监听页面加载
-   */
-  onLoad: function (options) {
-  
+  //事件处理函数
+  bindViewTap: function () {
+    wx.navigateTo({
+      url: '../logs/logs'
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-  
+  confirmDialog: function () {
+    var _this =this;
+    wx.showModal({
+      content: '请先登录',
+      success(res) {
+        if (res.confirm) {
+          wx.switchTab({
+            url: '../index/index'
+          })
+        } else if (res.cancel) {
+          wx.switchTab({
+            url: '../index/index' 
+          })
+        }
+      }
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
   onShow: function () {
-  
+   var  _this =this;
+    this.showBackBround();
+    if (app.globalData.userInfo) {
+      this.setData({
+        userInfo: app.globalData.userInfo,
+        hasUserInfo: true,
+        textHide:false
+      })
+    } else if (this.data.canIUse) {
+      _this.confirmDialog();
+      // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
+      // 所以此处加入 callback 以防止这种情况
+      app.userInfoReadyCallback = res => {
+        this.setData({
+          userInfo: res.userInfo,
+          hasUserInfo: true,
+          textHide: false
+        })
+      }
+    } else {
+      _this.confirmDialog();
+      // 在没有 open-type=getUserInfo 版本的兼容处理
+      wx.getUserInfo({
+        success: res => {
+          app.globalData.userInfo = res.userInfo
+          this.setData({
+            userInfo: res.userInfo,
+            hasUserInfo: true
+          })
+        }
+      })
+    }
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-  
+  getUserInfo: function (e) {
+    console.log(e)
+    app.globalData.userInfo = e.detail.userInfo
+    this.setData({
+      userInfo: e.detail.userInfo,
+      hasUserInfo: true
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-  
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-  
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-  
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-  
+  showBackBround: function () {
+    var that = this;
+    let bgImage = wx.getFileSystemManager().readFileSync(that.data.background, 'base64')
+      ;
+    that.setData({
+      'background': 'data:image/jpg;base64,' + bgImage
+    });
   }
 })
