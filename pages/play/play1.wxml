@@ -11,7 +11,7 @@
     <view class="text-class">{{content}}</view>
   </view>
   <block wx:for="{{anslist}}" class="anslist-class">
-    <button class='ans-class' bindtap='nextQuestion' id='{{item.id}}'>
+    <button class="ans-class" hover-class="{{isTrue?'ans-change-green':'ans-change-red'}}" bindtap='nextQuestion' id='{{item.id}}'>
       <!--{{item.letter+":"+item.content}}</button>-->
       {{item.content}}</button>
   </block>

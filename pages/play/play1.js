@@ -28,7 +28,8 @@ Page({
     car: "pages/image/car.jpg",
     playView: "pages/image/play3.jpg",
     animation: wx.createAnimation(),
-    isHide: true
+    isHide: true,
+    isTrue:true
   },
 
   /**
@@ -122,32 +123,41 @@ Page({
   //   "sort":1，
   //   "true":false
   // }]
-  toScore: function(score) {
-    var arr = this.data.contentArr;
-    var sir = this.data.selectIdsRes;
-    var sirArr = sir.split(",");
-    var data_arr = new Array(); 
-    for (var i in arr) {
-      var data_map = new Map();
-      console.info(i+"----"+arr[i]);
-      var aId = arr[i].info.aId;
-      data_map.que = arr[i].info.content;
-      for (var j = 0, len = arr[i].ans.length; j < len; j++) {
-        var ans_obj = arr[i].ans[j];
-        var ans_id = ans_obj.id;
-        var ans_content = ans_obj.content;
-        console.info("res---ans_id:" + ans_id +",aId--"+aId);
-        if (ans_id == aId){
-          data_map.ans= ans_content;
-          data_map.sort= i;
-          data_map.true=sirArr[j];
-        }
-      }
-      data_arr.push(data_map);
-    }
-    console.info("---" + JSON.stringify(data_arr));
+  // toScore: function(score) {
+  //   var arr = this.data.contentArr;
+  //   var sir = this.data.selectIdsRes;
+  //   var sirArr = sir.split(",");
+  //   var data_arr = new Array(); 
+  //   for (var i in arr) {
+  //     var data_map = new Map();
+  //     console.info(i+"----"+arr[i]);
+  //     var aId = arr[i].info.aId;
+  //     data_map.que = arr[i].info.content;
+  //     for (var j = 0, len = arr[i].ans.length; j < len; j++) {
+  //       var ans_obj = arr[i].ans[j];
+  //       var ans_id = ans_obj.id;
+  //       var ans_content = ans_obj.content;
+  //       console.info("res---ans_id:" + ans_id +",aId--"+aId);
+  //       if (ans_id == aId){
+  //         data_map.ans= ans_content;
+  //         data_map.sort= i;
+  //         data_map.true=sirArr[j];
+  //       }
+  //     }
+  //     data_arr.push(data_map);
+  //   }
+  //   console.info("---" + JSON.stringify(data_arr));
+  //   wx.redirectTo({
+  //     url: '../res/res?data=' + JSON.stringify(data_arr)
+  //   })
+  // },
+  //{"score":10}
+  toScore: function (score) {
+    console.info("-score-" + score);
+    var data_map = new Map();
+    data_map.score =score;
     wx.redirectTo({
-      url: '../res/res?data=' + JSON.stringify(data_arr)
+      url: '../res/res?data=' + JSON.stringify(data_map)
     })
   },
   showNextQuestion: function(id) {
@@ -170,22 +180,20 @@ Page({
   },
   //显示选择题
   judgeSelect: function(id) {
-    var sir = this.data.selectIdsRes;
-    console.info("sir:" + sir);
     var contentJson = this.data.contentArr[this.data.titleNum - 1];
    var cid= contentJson.info.aId;
     console.info("selectId:"+id+",cid:"+cid);
     var titleSort = this.data.titleNum;
-    if (sir!=null){
-      sir = sir+(cid == id)+","
-    }else{
-      sir = (cid == id) + ","
-    }
-    this.setData({
-      selectIdsRes: sir
-    })
-    if (true) {
+    //选对了加分并且改变颜色
+    if (id==cid) {
       this.data.score = this.data.score + 10;
+      this.setData({
+        isTrue: true
+      })
+    }else{
+      this.setData({
+        isTrue: false
+      })
     }
     if (titleSort >= ansNum) {
       //计算分数
@@ -207,7 +215,7 @@ Page({
       end = -0.5 * Math.PI; // 结束的弧度
     // 计时器容器
     var animation_interval = 125, // 每1秒运行一次计时器
-      n = 3; // 当前倒计时为10秒
+      n = 10; // 当前倒计时为10秒
     function animation() {
       if (step <= v * (n + 1)) {
         end = end + 2 * Math.PI / (v * n);

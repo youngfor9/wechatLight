@@ -12,8 +12,7 @@ Page({
   //  res_image: "pages/res/back.jpg",
     txtImage: "pages/image/txt.jpg",
     animationData: {},
-    que:"",
-    ans:""
+    score:"",
   },
 
   /**
@@ -22,14 +21,10 @@ Page({
   onLoad: function (e) {
     this.getBase64ImageUrl();
     var data = JSON.parse(e.data)
-    console.info("data:" + data[0]);
+    console.info("data:" + data);
     this.setData({
-      data: data,
-      que:data[0].que,
-      ans:data[0].ans
+      score:data.score,
     });
-    console.info("res:" +this.data.que);
-    console.info("res2:" + this.data.ans);
   },
 
   /**

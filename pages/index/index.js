@@ -77,7 +77,9 @@ Page({
    
   },
   toPlay:function(e){
-    this.getUserInfo();
+    //this.getUserInfo();
+    var info = this.data.userInfo;
+    console.info("info:" + JSON.stringify(info));
     getCurrentPages().pop(),
       wx.navigateTo({
       url:'../play/play1'

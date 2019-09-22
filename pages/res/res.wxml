@@ -1,9 +1,7 @@
 <page class="res">
         <image class='txt-class' src="{{txtImage}}" mode="scaleToFill"></image>
  <view class="bg" style='background-image: url({{res_image}})' animation="{{animation}}">
-      <view class='score-label-class'><label>{{que}}</label></view>
-    <view class='rank-label-class'> <label>{{ans}}</label></view>
+      <view class='score-label-class'><label>{{score}}</label></view>
  </view>
   <button class='exitGame_class' bindtap='exitGame'>继续游戏</button>
-
 </page>

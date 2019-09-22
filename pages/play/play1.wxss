@@ -52,14 +52,28 @@ bottom: 0px;
 }
 .ans-class:hover {
 	text-decoration: none;
-  
 }
-.ans-class:active {
+/* .ans-class:active {
 	position: relative;
 	top: 2px;
-  background-color: #424242; 
-  color:#D0D0D0; 
+  /* background-color: #424242; 
+  color:#D0D0D0;  
+}*/
+.ans-change-red{
+  position: relative;
+	top: 2px;
+  background-color: #d81616; 
+  color:rgb(255, 255, 255);
+  font-weight:bold; 
 }
+.ans-change-green{
+  position: relative;
+	top: 2px;
+  background-color: #0cf50ce5; 
+  color:rgb(255, 255, 255);
+  font-weight:bold; 
+}
+
 /**倒计时**/
 /* .progress_box{
   position: relative;
