@@ -8,7 +8,7 @@ Page({
    */
   data: {
     data: data,
-    rank: "影迷",
+    rank: "等级需登录才能显示",
   //  res_image: "pages/res/back.jpg",
     txtImage: "pages/image/txt.jpg",
     animationData: {},
@@ -25,6 +25,10 @@ Page({
     this.setData({
       score:data.score,
     });
+   var user  =  app.globalData.userInfo;
+    if (user){
+      this.setUser(user);
+    }
   },
 
   /**
@@ -111,4 +115,66 @@ Page({
       })
     }.bind(this), 1000)
   },
+  saveUser:function(userInfo){
+    var _this = this
+    wx.request({
+      url: 'https://47.98.216.184/user/saveUser',
+      method: 'POST',
+      data: userInfo,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        var restr = JSON.stringify(res);
+        console.info("已经请求了：" + restr);
+        var jsonObj = JSON.parse(restr);
+          console.log("--success--");
+      },
+      fail: function (res) {
+        console.log("--fail--");
+      }
+    })
+  },
+//获取用户信息
+  setUser:function (userInfo) {
+    var _this = this;
+    var param ={
+      "nickName":userInfo.nickName
+      };
+    wx.request({
+      url: 'https://47.98.216.184/user/getUser',
+      method: 'POST',
+      data: param,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        //user已经存在
+        if(res.data){
+          var restr = JSON.stringify(res);
+          console.info("获取user返回结果：" + restr);
+          var jsonObj = JSON.parse(restr);
+          //设置全局变量user
+          jsonObj.lastScore = _this.data.score;
+          jsonObj.score = _this.data.score + jsonObj.score ;
+          console.info("jsonObj.score:" + jsonObj.score);
+          //计算等级
+          var rank = app.calculateRank(jsonObj.score);
+          jsonObj.rank = rank;
+          //更新userInfo
+          app.globalData.userInfo = jsonObj;
+          //保存user
+          _this.saveUser(jsonObj);
+        //user不存在
+        }else{
+          userInfo.lastScore = _this.data.score;
+          userInfo.score = _this.data.score;
+          _this.saveUser(userInfo);
+        }
+      },
+      fail: function (res) {
+        console.log("--fail--");
+      }
+    })
+  }
 })

@@ -1,7 +1,9 @@
 <page class="res">
         <image class='txt-class' src="{{txtImage}}" mode="scaleToFill"></image>
  <view class="bg" style='background-image: url({{res_image}})' animation="{{animation}}">
-      <view class='score-label-class'><label>{{score}}</label></view>
+      <view class='score-label-class'><label>当前称号：{{rank}}</label></view>
+      <view class='score-label-class'><label>本轮得分：{{score}}</label></view>
  </view>
-  <button class='exitGame_class' bindtap='exitGame'>继续游戏</button>
+  <button class='exitGame_class' bindtap='exitGame'>再来一次</button>
+  <button class='exitGame_class' bindtap='exitGame'>查看排行榜</button>
 </page>

@@ -34,11 +34,32 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    rank:""
   },
   exitGame: function (e) {
     wx.switchTab({
       url: '../index/index'
     })
-  }
+  },
+  //计算等级
+  //等级划分 素人（0），群众演员（10），电影演员（30），影星（100），影帝（影后）（200），骨灰级影帝（影后）（500）
+  calculateRank: function (score, gender){
+    var name ="帝";
+    if(gender==2){
+      name="后";
+    }
+    var rank_map = new Map();
+    rank_map.set(0,"素人");
+    rank_map.set(10,"群众演员");
+    rank_map.set(30,"电影演员");
+    rank_map.set(100, "影" + name);
+    rank_map.set(200,"骨灰级影"+name);
+     for (var i in rank_map.keys) {
+        if(i >= score){
+           return rank_map.get(i);
+        }
+     }
+    return "骨灰级影" + name;
+    }
 })
