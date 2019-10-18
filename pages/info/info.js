@@ -15,6 +15,9 @@ Page({
     totalScore:100,
     textHide:true,
   },
+  onLoad:function(){
+    this.showBackBround();
+  },
   //事件处理函数
   bindViewTap: function () {
     wx.navigateTo({
@@ -40,7 +43,7 @@ Page({
   },
   onShow: function () {
    var  _this =this;
-    this.showBackBround();
+    console.info("666"+app.globalData.userInfo);
     if (app.globalData.userInfo) {
       this.setData({
         userInfo: app.globalData.userInfo,

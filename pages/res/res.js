@@ -8,9 +8,9 @@ Page({
    */
   data: {
     data: data,
-    rank: "等级需登录才能显示",
+    rank: "未登录",
   //  res_image: "pages/res/back.jpg",
-    txtImage: "pages/image/txt.jpg",
+    txtImage: "pages/image/play3.jpg",
     animationData: {},
     score:"",
   },
@@ -19,6 +19,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (e) {
+    this.init_animation();
+    // this.rotateThenScale();
     this.getBase64ImageUrl();
     var data = JSON.parse(e.data)
     console.info("data:" + data);
@@ -35,8 +37,6 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function () {
-    this.init_animation();
-    this.rotateThenScale();
   },
 
   /**
@@ -96,13 +96,13 @@ Page({
   },
   init_animation: function () {
     var animation = wx.createAnimation({
-      duration: 1000,
+      duration: 500,
       timingFunction: 'ease',
     })
 
     this.animation = animation
 
-    animation.scale(2, 2).rotate(45).step()
+    animation.scale(1.5, 1.5).rotate(30).step()
 
     this.setData({
       animationData: animation.export()
@@ -113,7 +113,7 @@ Page({
       this.setData({
         animationData: animation.export()
       })
-    }.bind(this), 1000)
+    }.bind(this), 500)
   },
   saveUser:function(userInfo){
     var _this = this

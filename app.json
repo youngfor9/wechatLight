@@ -4,7 +4,8 @@
     "pages/logs/logs",
     "pages/info/info",
     "pages/play/play1",
-    "pages/res/res"
+    "pages/res/res",
+    "pages/rankList/rank"
   ],
   "window": {
     "navigationBarTitleText": "Demo"
@@ -16,7 +17,7 @@
         "text": "首页"
       },
       {
-        "pagePath": "pages/logs/logs",
+        "pagePath": "pages/rankList/rank",
         "text": "排行榜"
       },
       {

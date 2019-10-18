@@ -41,7 +41,7 @@ Page({
     }
     var _this = this
     wx.request({
-      url: 'https://47.98.216.184/dialogue/getDialogueInfos',
+      url: 'https://www.taici.site/dialogue/getDialogueInfos',
       method: 'GET',
       data: param,
       header: {

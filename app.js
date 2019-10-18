@@ -61,5 +61,31 @@ App({
         }
      }
     return "骨灰级影" + name;
+    },
+  /**
+* 动画实现
+* @method animationShow
+* @param {that} 当前卡片
+* @param {opacity} 透明度
+* @param {delay} 延迟
+* @param {isUp} 移动方向
+*/
+  animationShow: function (that, opacity, delay, isUp) {
+    let animation = wx.createAnimation({
+      duration: 1000,
+      timingFunction: 'ease',
+      delay: delay
+    });
+    //考虑到还需要隐藏掉当天之前的卡片，做如下判断来赋予不同的动画效果
+    if (isUp == 'down') {
+      animation.translateY(0).opacity(opacity).step().translateY(-80).step();
+    } else if (isUp == 'up') {
+      animation.translateY(0).opacity(opacity).step().translateY(-140).opacity(0).step()
+    } else {
+      animation.translateY(0).opacity(opacity).step()
     }
+    let params = ''
+    params = animation.export()
+    return params
+  }, 
 })

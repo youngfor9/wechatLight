@@ -1,0 +1,73 @@
+/* pages/rankList/rank.js.wxss */
+
+.init{
+  opacity: 0;
+  transform: translateY(-80px)
+}
+
+page{
+  background-color: #f6f6f6;
+}
+.row{
+  background-color: #fff;
+  margin-bottom: 10rpx;
+  padding: 30rpx;
+}
+.t_row{
+  background-color: 	#4682B4;
+  margin-bottom: 10rpx;
+  padding: 30rpx;
+}
+.row:last-of-type{
+  padding-bottom: 80rpx;
+  margin-bottom: 0rpx;
+}
+.user{
+  text-align: center;
+}
+.user .text-muted{
+  text-align: center;
+}
+.username{
+  margin: 15rpx auto;
+  font: "黑体";
+  color: white;
+  font-weight: 800;
+  font-size: 25px;
+}
+.user image{
+  width: 180rpx;
+  height: 180rpx;
+  border-radius: 90rpx;
+}
+.base-info image{
+  height: 50rpx;
+  width: 50rpx;
+  position: relative;
+  top:8rpx;
+  margin-right: 30rpx;
+}
+.base-info image.pull-right{
+  margin-right: 0rpx;
+}
+.base-info{
+  padding-top: 0rpx;
+  padding-bottom: 0rpx;
+}
+.base-info .col-12{
+  border-bottom: 1px solid #f6f6f6;
+  padding-bottom: 30rpx;
+  padding-top: 30rpx;
+  color: #666;
+}
+ 
+.base-info .col-12:last-of-type{
+  border-bottom: 0rpx;
+  margin-bottom: 0rpx;
+}
+.radius-class{
+  border-radius: 50%;    height: 20px;    width: 20px;    display: inline-block;         background: #5F9EA0;      vertical-align: center;
+}
+.radius-center-class{
+  display: block;    color: #FFFFFF;    height: 20px;    line-height: 20px;    text-align: center
+}

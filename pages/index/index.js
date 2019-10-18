@@ -9,7 +9,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     mode: 'scaleToFill',
-    background:"pages/image/background.jpg",
+    background:"pages/image/back.jpg",
     title_image:"pages/image/title.jpg"
   },
   //事件处理函数

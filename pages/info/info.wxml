@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="zbg">
+<!-- <view class="zbg">
   <image class='bg' src="{{background}}" mode="scaleToFill"></image>
   <view class="userinfo-class">
       <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
@@ -10,5 +10,49 @@
         目前总得分：{{totalScore}}，
         距离上级别还需：{{lackScore}}
       </text>
+  </view>
+</view>
+
+
+<view > -->
+<!-- <view class="init" animation="{{animations[1].animation}}">
+<text>{{ranks[0]}}</text>
+</view>
+<view class="init" animation="{{animations[1].animation}}">
+<text>{{ranks[1]}}</text>
+</view>
+<view class="init" animation="{{animations[1].animation}}">
+<text>{{ranks[2]}}</text>
+</view> -->
+<view class="zbg">
+<view class='base-padding t_row' >
+  <view class='user'>
+     <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
+     
+    <!-- <view class='color-grey font-lv3'>如果你浪费了自己的年龄，那是挺可悲的。因为你的青春只能持续一点儿时间——很短的一点儿时间。</view> -->
+  </view>
+</view>
+  <!-- <image class='bg' src="{{background}}" mode="scaleToFill"></image>  -->
+  <view class='base-padding row base-info' hidden="{{textHide}}">
+   <navigator url='' class='col-12'>
+      <text  class="text">昵称：</text>
+      <text id="value">{{userInfo.nickName}}</text>
+    </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">历史最好成绩：</text>
+        <text id="value">{{mostScore}}</text>
+    </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">当前级别：</text>
+      <text id="value">{{rank}}</text>
+    </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">目前总得分：</text>
+      <text id="value">{{totalScore}}</text>
+    </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">距离上级别还需：</text>
+       <text id="value">{{lackScore}}</text>
+    </navigator>
   </view>
 </view>
