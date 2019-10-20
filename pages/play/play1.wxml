@@ -7,11 +7,12 @@
     <image class='view-class' src="{{view}}" mode="scaleToFill"></image>
      <image class='car-class' src="{{car}}" animation="{{animation}}"></image>
     <label class='title-label-class' hidden="{{isHide}}">第{{titleNum}}题</label>
-  <view class='question-class' >
+  <view class='question-class'>
     <view class="text-class">{{content}}</view>
   </view>
-  <block wx:for="{{anslist}}" class="anslist-class">
-    <button class="ans-class" hover-class="{{isTrue?'ans-change-green':'ans-change-red'}}" bindtap='nextQuestion' id='{{item.id}}'>
+  <block wx:for="{{anslist}}" wx:key="{{index}}" class="anslist-class">
+  <!--data-自定义 表示传值到方法中，但是不能用大写；参数少的时候直接使用id就可以了-->
+    <button class="ans-class select {{item.id==correctid&&index==id?'ans-change-green':''}} {{item.id!=correctid&&index==id?'ans-change-red':''}}"  bindtap='nextQuestion' data-id='{{index}}' data-aid='{{item.id}}'>
       <!--{{item.letter+":"+item.content}}</button>-->
       {{item.content}}</button>
   </block>

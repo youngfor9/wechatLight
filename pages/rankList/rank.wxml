@@ -14,23 +14,25 @@
     <image src='{{jinIcon}}'></image>
      <image src='{{yinIcon}}'></image>
      <image src='{{tongIcon}}'></image>
-    <view class='username'>排行榜</view>
+    <view class='username'>排行榜TOP10</view>
     <!-- <view class='color-grey font-lv3'>如果你浪费了自己的年龄，那是挺可悲的。因为你的青春只能持续一点儿时间——很短的一点儿时间。</view> -->
   </view>
 </view>
 <view class='base-padding row base-info' animation="{{animations[0].animation}}"><text decode="{{true}}">&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;加载中...</text> </view>
- <view wx:for="{{ranks}}" class='base-padding row base-info 'animation="{{animations[1].animation}}">
+ <view wx:for="{{users}}" class='base-padding row base-info 'animation="{{animations[1].animation}}">
   <navigator url='' class='col-12' >
   <view wx:if="{{index<3}}">
     <image src="{{medals[index]}}"></image>
-      <text decode="{{true}}">&emsp;{{item}}</text> 
+        <span><text decode="{{true}}" >&emsp;&emsp;{{item.nickName}}</text> </span>
+        <text decode="{{true}}" style="position: absolute;left:80%">{{item.score}}</text>
     <!-- <image class='pull-right' src='../../images/right-angle.png'></image> -->
     </view>
     <view wx:else>
         <span class="radius-class">
           <text class="radius-center-class">{{index}}</text>
         </span>
-          <text decode="{{true}}">&emsp;&emsp;{{item}}</text> 
+          <text decode="{{true}}" style="position: absolute;left:80%">&emsp;&emsp;{{item.nickName}}</text> 
+          <text decode="{{true}}">{{item.score}}</text>>
     </view>
   </navigator>
 </view>

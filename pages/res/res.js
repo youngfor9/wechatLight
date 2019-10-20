@@ -8,7 +8,7 @@ Page({
    */
   data: {
     data: data,
-    rank: "未登录",
+    label: "未登录",
   //  res_image: "pages/res/back.jpg",
     txtImage: "pages/image/play3.jpg",
     animationData: {},
@@ -32,7 +32,6 @@ Page({
       this.setUser(user);
     }
   },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */
@@ -73,8 +72,11 @@ Page({
   onReachBottom: function () {
 
   },
-  exitGame: function (e) {
-    app.exitGame();
+  rePlay: function (e) {
+    getCurrentPages().pop(),
+      wx.redirectTo({
+        url: '../play/play1'
+      })
   },
   getBase64ImageUrl: function () {
     var _this =this;
@@ -93,6 +95,11 @@ Page({
     this.animation.rotate(360).step()
       .scale(1).step()
     this.setData({ animation: this.animation.export() })
+  },
+  toHome:function(){
+    wx.switchTab({
+      url: '../index/index'
+    })
   },
   init_animation: function () {
     var animation = wx.createAnimation({
@@ -115,26 +122,6 @@ Page({
       })
     }.bind(this), 500)
   },
-  saveUser:function(userInfo){
-    var _this = this
-    wx.request({
-      url: 'https://47.98.216.184/user/saveUser',
-      method: 'POST',
-      data: userInfo,
-      header: {
-        'content-type': 'application/json'
-      },
-      success: function (res) {
-        var restr = JSON.stringify(res);
-        console.info("已经请求了：" + restr);
-        var jsonObj = JSON.parse(restr);
-          console.log("--success--");
-      },
-      fail: function (res) {
-        console.log("--fail--");
-      }
-    })
-  },
 //获取用户信息
   setUser:function (userInfo) {
     var _this = this;
@@ -142,34 +129,40 @@ Page({
       "nickName":userInfo.nickName
       };
     wx.request({
-      url: 'https://47.98.216.184/user/getUser',
-      method: 'POST',
+      url: 'https://www.taici.site/user/getUser',
+      method: 'GET',
       data: param,
       header: {
         'content-type': 'application/json'
       },
       success: function (res) {
-        //user已经存在
+        var restr = JSON.stringify(res);
+        console.info("获取user返回结果：" + restr);      
+          //user已经存在
         if(res.data){
-          var restr = JSON.stringify(res);
-          console.info("获取user返回结果：" + restr);
-          var jsonObj = JSON.parse(restr);
+          var jsonObj = JSON.parse(JSON.stringify(res.data));
           //设置全局变量user
           jsonObj.lastScore = _this.data.score;
           jsonObj.score = _this.data.score + jsonObj.score ;
-          console.info("jsonObj.score:" + jsonObj.score);
           //计算等级
-          var rank = app.calculateRank(jsonObj.score);
-          jsonObj.rank = rank;
+          var label = app.calculateLabel(jsonObj.score);
+          console.info("--label--" + label);
+          console.info("--score--"+score);
+          jsonObj.label = label;
+          jsonObj.cTime=null;
+          jsonObj.uTime=null;
+          _this.setData({
+            'label': label
+          })
           //更新userInfo
           app.globalData.userInfo = jsonObj;
           //保存user
-          _this.saveUser(jsonObj);
+          app.saveUser(jsonObj);
         //user不存在
         }else{
           userInfo.lastScore = _this.data.score;
           userInfo.score = _this.data.score;
-          _this.saveUser(userInfo);
+          app.saveUser(userInfo);
         }
       },
       fail: function (res) {

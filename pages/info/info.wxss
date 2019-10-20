@@ -90,6 +90,7 @@ box-sizing: border-box;
   font-weight: 800
 }
 #value{
-color: black;
+  color: seashell;
   font:"黑体";
+  font-weight: 800;
 }

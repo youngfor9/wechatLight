@@ -30,27 +30,31 @@ Page({
     }
   },
   onLoad: function () {
-    console.info("user--" + this.data.userInfo.nickName);
     this.showBackBround();
     if (app.globalData.userInfo) {
+      console.info("1");
       this.setData({
         userInfo: app.globalData.userInfo,
         hasUserInfo: true
       })
     } else if (this.data.userInfo.nickName!=undefined){
+      console.info("2");
       this.setData({
         hasUserInfo: true
       })
     }else if (this.data.canIUse){
+      console.info("4");
       // 由于 getUserInfo 是网络请求，可能会在 Page.onLoad 之后才返回
       // 所以此处加入 callback 以防止这种情况
       app.userInfoReadyCallback = res => {
+        app.globalData.userInfo = res.userInfo
         this.setData({
           userInfo: res.userInfo,
           hasUserInfo: true
         })
       }
     } else {
+      console.info("3");
       // 在没有 open-type=getUserInfo 版本的兼容处理
       wx.getUserInfo({
         success: res => {
@@ -62,26 +66,65 @@ Page({
       })
     }
   },
+  handleUser: function (userInfo){
+    if (userInfo) {
+      console.info("getUser参数：" + JSON.stringify(userInfo));
+      var _this = this;
+      var param = {
+        "nickName": userInfo.nickName
+      };
+      wx.request({
+        url: 'https://www.taici.site/user/getUser',
+        method: 'GET',
+        data: param,
+        header: {
+          'content-type': 'application/json'
+        },
+        success: function (res) {
+          var restr = JSON.stringify(res);
+          console.info("获取user返回结果：" + restr);
+          //user已经存在
+          if (res.data) {
+            var jsonObj = JSON.parse(JSON.stringify(res.data));
+            //计算等级
+            var score =jsonObj.score;
+            var label = app.calculateLabel(core);
+            jsonObj.lackScore = app.calculateLack(score);
+            jsonObj.label = label;
+            jsonObj.cTime = null;
+            jsonObj.uTime = null;
+            app.globalData.userInfo = jsonObj;
+          } else {
+            app.saveUser(userInfo);
+          }
+        },
+        fail: function (res) {
+          console.log("getUser--fail--");
+        }
+      })
+    }
+  },
   //程序启动后调用
   onLaunch: function () {
     this.canIUse();
   },
   getUserInfo: function(e) {
-    app.globalData.userInfo = e.detail.userInfo
-    if (app.globalData.userInfo) {
+    var info =e.detail.userInfo;
+    app.globalData.userInfo = info;
+    if (info) {
+      this.handleUser(info);
       this.setData({
-        userInfo: e.detail.userInfo,
+        userInfo: info,
         hasUserInfo: true
       })
     }
    
   },
   toPlay:function(e){
-    //this.getUserInfo();
     var info = this.data.userInfo;
     console.info("info:" + JSON.stringify(info));
     getCurrentPages().pop(),
-      wx.navigateTo({
+      wx.redirectTo({
       url:'../play/play1'
     })
   },

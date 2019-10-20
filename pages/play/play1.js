@@ -1,5 +1,5 @@
 // pages/play/play1.js
-const content = '\n三年又三年'
+const content = ''
 var process = require("../play/process.js");
 const autoId = 0;
 const score = 0;
@@ -16,7 +16,7 @@ Page({
    */
   data: {
     content: content,
-    ansIds:[],
+    correctid:-1,
     anslist: [
     ],
     titleNum: 1,
@@ -28,14 +28,15 @@ Page({
     car: "pages/image/car.jpg",
     playView: "pages/image/play3.jpg",
     animation: wx.createAnimation(),
-    isHide: true,
-    isTrue:true
+    isHide: false,
+    ans_change_color:"",
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+   
     var param = {
       "num": 3
     }
@@ -55,7 +56,7 @@ Page({
           contentArr: jsonObj.data,
           content: jsonObj.data[0].info.content,
           anslist: jsonObj.data[0].ans,
-          ansIds: jsonObj.data[0].info.aId
+          correctid: jsonObj.data[0].info.aId
         })
       },
       fail: function(res) {
@@ -68,16 +69,16 @@ Page({
    * 生命周期函数--监听页面初次渲染完成
    */
   onReady: function() {
-    this.animation = wx.createAnimation();
-    this.initCar();
-    this.countDown();
+    this.showBackBround();
   },
 
   /**
    * 生命周期函数--监听页面显示
    */
   onShow: function() {
-    this.showBackBround();
+    this.animation = wx.createAnimation();
+    this.initCar();
+    this.countDown();
   },
 
   /**
@@ -160,47 +161,46 @@ Page({
       url: '../res/res?data=' + JSON.stringify(data_map)
     })
   },
-  showNextQuestion: function(id) {
+  showNextQuestion: function() {
     var _this= this;
     //内容
     console.info("content.size:" + this.data.titleNum);
     var contentJson = this.data.contentArr[this.data.titleNum];
-    console.info("contentJson:" + contentJson);
-
     this.setData({
       content: contentJson.info.content,
       anslist: contentJson.ans,
+      correctid: contentJson.info.aId,
       'titleNum': _this.data.titleNum + 1,
     })
     this.countDown();
   },
   nextQuestion: function(e) {
     clearInterval(this.data.time);
-    this.judgeSelect(e.currentTarget.id);
+    this.setData({
+      id: e.currentTarget.dataset.id
+    })
+    console.info("e.currentTarget.dataset.ansId" + e.currentTarget.dataset.aid);
+    this.judgeSelect(e.currentTarget.dataset.aid);
+    this.setData({
+      id: -1
+    })
   },
   //显示选择题
-  judgeSelect: function(id) {
+  judgeSelect: function ( aid) {
     var contentJson = this.data.contentArr[this.data.titleNum - 1];
    var cid= contentJson.info.aId;
-    console.info("selectId:"+id+",cid:"+cid);
+    console.info("selectId:" + aid +",aId:"+cid);
     var titleSort = this.data.titleNum;
     //选对了加分并且改变颜色
-    if (id==cid) {
+    if (aid==cid) {
       this.data.score = this.data.score + 10;
-      this.setData({
-        isTrue: true
-      })
-    }else{
-      this.setData({
-        isTrue: false
-      })
     }
     if (titleSort >= ansNum) {
       //计算分数
       this.toScore(this.data.score);
     } else {
       //显示下一题
-      this.showNextQuestion(id);
+      this.showNextQuestion();
     }
   },
 

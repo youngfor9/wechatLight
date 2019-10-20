@@ -11,8 +11,8 @@ Page({
     jinIcon: "pages/image/jin.jpg",
     yinIcon: "pages/image/yin.jpg",
     tongIcon: "pages/image/tong.jpg",
-    
-    ranks:["刘德华","胡歌","成龙","谢霆锋","周星驰"]
+    users:[],
+    score:[100,90,80,70,60]
   },
 
   /**
@@ -33,6 +33,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.getUsers();
     var _this = this;
     var animations = this.data.animations;
     for (let i = 0; i < animations.length; i++) {
@@ -119,5 +120,33 @@ Page({
       'medals': ['data:image/jpg;base64,' + jinIcon, 'data:image/jpg;base64,' + yinIcon, 'data:image/jpg;base64,' + tongIcon]
     });
   },
+  getUsers: function (userInfo) {
+    var _this = this;
+    var param = {
+      "num": 10
+    };
+    wx.request({
+      url: 'https://www.taici.site/user/getUsers',
+      method: 'GET',
+      data: param,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        var restr = JSON.stringify(res);
+        console.info("获取users返回结果：" + restr);
+        //user已经存在
+        if (res.data) {
+          var jsonObj = JSON.parse(JSON.stringify(res.data));
+          _this.setData({
+            'users': jsonObj
+          })
+          }
+      },
+      fail: function (res) {
+        console.log("--fail--");
+      }
+    })
+  }
 
 })

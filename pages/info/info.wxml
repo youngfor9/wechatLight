@@ -6,7 +6,7 @@
       <text class="userinfo-nickname">{{userInfo.nickName}}</text>
         <text class="text-class" hidden="{{textHide}}">
         历史最好成绩：{{mostScore}}
-        当前级别：{{rank}}
+        当前级别：{{label}}
         目前总得分：{{totalScore}}，
         距离上级别还需：{{lackScore}}
       </text>
@@ -28,7 +28,6 @@
 <view class='base-padding t_row' >
   <view class='user'>
      <image bindtap="bindViewTap" class="userinfo-avatar" src="{{userInfo.avatarUrl}}" mode="cover"></image>
-     
     <!-- <view class='color-grey font-lv3'>如果你浪费了自己的年龄，那是挺可悲的。因为你的青春只能持续一点儿时间——很短的一点儿时间。</view> -->
   </view>
 </view>
@@ -39,20 +38,30 @@
       <text id="value">{{userInfo.nickName}}</text>
     </navigator>
     <navigator url='' class='col-12'>
-      <text class="text">历史最好成绩：</text>
-        <text id="value">{{mostScore}}</text>
-    </navigator>
-    <navigator url='' class='col-12'>
-      <text class="text">当前级别：</text>
-      <text id="value">{{rank}}</text>
-    </navigator>
-    <navigator url='' class='col-12'>
       <text class="text">目前总得分：</text>
       <text id="value">{{totalScore}}</text>
     </navigator>
     <navigator url='' class='col-12'>
-      <text class="text">距离上级别还需：</text>
+      <text class="text">当前排名：</text>
+        <text id="value">{{rankStr}}</text>
+    </navigator>
+     <navigator url='' class='col-12'>
+      <text class="text">当前级别：</text>
+      <text id="value">{{label}}</text>
+    </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">距离下级别还需：</text>
        <text id="value">{{lackScore}}</text>
     </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">上次成绩：</text>
+        <text id="value">{{lastScore}}</text>
+    </navigator>
+    <navigator url='' class='col-12'>
+      <text class="text">最喜爱的台词：</text>
+      </navigator>
+     <navigator url='' class='col-12'>
+       <text id="value">{{dialogue}}</text>
+     </navigator>
   </view>
 </view>

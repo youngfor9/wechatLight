@@ -35,7 +35,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    rank:""
   },
   exitGame: function (e) {
     wx.switchTab({
@@ -44,24 +43,31 @@ App({
   },
   //计算等级
   //等级划分 素人（0），群众演员（10），电影演员（30），影星（100），影帝（影后）（200），骨灰级影帝（影后）（500）
-  calculateRank: function (score, gender){
+  calculateLabel: function (score, gender){
     var name ="帝";
     if(gender==2){
       name="后";
     }
-    var rank_map = new Map();
-    rank_map.set(0,"素人");
-    rank_map.set(10,"群众演员");
-    rank_map.set(30,"电影演员");
-    rank_map.set(100, "影" + name);
-    rank_map.set(200,"骨灰级影"+name);
-     for (var i in rank_map.keys) {
-        if(i >= score){
-           return rank_map.get(i);
-        }
+    var arr = [0 ,100 ,300,1000, 2000,10000];
+    var labels = ["素人", "群众演员", "电影演员", "影" + name, "骨灰级影" + name, "终身影" + name];
+    var len = arr.length;
+    for (var i = 0; i<len;i++) {
+      if (arr[i] > score){
+        return labels[i-1];
+         }
      }
-    return "骨灰级影" + name;
+    return "终身影" + name;
     },
+  calculateLack: function (score, gender) {
+    var arr = [0, 100, 300, 1000, 2000, 10000];
+    var len = arr.length;
+    for (var i = 0; i < len; i++) {
+      if (arr[i] > score) {
+        return arr[i]-score ;
+      }
+    }
+    return 0;
+  },
   /**
 * 动画实现
 * @method animationShow
@@ -88,4 +94,25 @@ App({
     params = animation.export()
     return params
   }, 
+ 
+  saveUser: function (userInfo) {
+    console.info("saveuser参数：" + JSON.stringify(userInfo));
+    var _this = this
+    wx.request({
+      url: 'https://www.taici.site/user/saveUser',
+      method: 'POST',
+      data: userInfo,
+      header: {
+        'content-type': 'application/json'
+      },
+      success: function (res) {
+        var restr = JSON.stringify(res);
+        console.info("saveUser返回数据：" + restr);
+        var jsonObj = JSON.parse(restr);
+      },
+      fail: function (res) {
+        console.log("saveUser--fail--");
+      }
+    })
+  },
 })

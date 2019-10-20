@@ -2,16 +2,16 @@
   <image class='txt-class' src="{{txtImage}}" mode="scaleToFill"></image>
   <view class="bg" animation="{{animationData}}">
     <view style="margin-top:20px">
-      <label id="lable_id">当前称号：{{rank}}</label>
+      <label id="lable_id">当前称号：{{label}}</label>
     </view>
     <view>
       <label id="lable_id">本轮得分：{{score}}</label>
     </view>
     <span style="padding-block:10px">
-    <button class='game_class' style="padding-inline:24px;margin-top:30%" bindtap='exitGame'>再来一次</button>
+    <button class='game_class' style="padding-inline:24px;margin-top:30%" bindtap='toHome'>返回</button>
   </span>
   <span>
-    <button class='game_class' bindtap='exitGame'>查看排行榜</button>
+    <button class='game_class' bindtap='rePlay'>再玩一次</button>
   </span>
   </view>
   
