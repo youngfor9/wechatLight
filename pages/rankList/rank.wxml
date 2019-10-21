@@ -31,8 +31,8 @@
         <span class="radius-class">
           <text class="radius-center-class">{{index}}</text>
         </span>
-          <text decode="{{true}}" style="position: absolute;left:80%">&emsp;&emsp;{{item.nickName}}</text> 
-          <text decode="{{true}}">{{item.score}}</text>>
+          <span><text decode="{{true}}" >&emsp;&emsp;&emsp;{{item.nickName}}</text> </span>
+        <text decode="{{true}}" style="position: absolute;left:80%">{{item.score}}</text>
     </view>
   </navigator>
 </view>
