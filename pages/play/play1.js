@@ -24,7 +24,7 @@ Page({
     score: 0,
     contentArr: null,
     time: null,
-    view: "pages/image/view1.gif",
+    view: "pages/image/view.gif",
     car: "pages/image/car.jpg",
     playView: "pages/image/play3.jpg",
     animation: wx.createAnimation(),

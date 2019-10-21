@@ -7,7 +7,7 @@ Page({
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     mode: 'scaleToFill',
-    background: "pages/image/background.jpg",
+   // background: "pages/image/background.jpg",
     lastScore:0,
     label: "未出道",
     lackScore:0,
@@ -17,7 +17,7 @@ Page({
     rankStr:""
   },
   onLoad:function(){
-    this.showBackBround();
+    //this.showBackBround();
   },
   //事件处理函数
   bindViewTap: function () {
@@ -87,14 +87,14 @@ Page({
       hasUserInfo: true
     })
   },
-  showBackBround: function () {
-    var that = this;
-    let bgImage = wx.getFileSystemManager().readFileSync(that.data.background, 'base64')
-      ;
-    that.setData({
-      'background': 'data:image/jpg;base64,' + bgImage
-    });
-  },
+  // showBackBround: function () {
+  //   var that = this;
+  //   let bgImage = wx.getFileSystemManager().readFileSync(that.data.background, 'base64')
+  //     ;
+  //   that.setData({
+  //     'background': 'data:image/jpg;base64,' + bgImage
+  //   });
+  // },
   showInfo:function(){
     var hasUser = this.data.hasUserInfo;
     console.info("hasUser:"+hasUser);

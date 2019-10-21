@@ -12,6 +12,7 @@
 		"newFeature": true,
 		"nodeModules": false,
 		"autoAudits": true,
+		"uglifyFileName": true,
 		"checkInvalidKey": true,
 		"checkSiteMap": true,
 		"uploadWithSourceMap": true,
@@ -22,8 +23,8 @@
 		}
 	},
 	"compileType": "miniprogram",
-	"libVersion": "2.8.3",
-	"appid": "wx432c6d0b09814796",
+	"libVersion": "2.9.0",
+	"appid": "wx07689c297f453837",
 	"projectname": "wechatLight",
 	"isGameTourist": false,
 	"simulatorType": "wechat",
