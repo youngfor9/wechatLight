@@ -29,7 +29,7 @@
     </view>
     <view wx:else>
         <span class="radius-class">
-          <text class="radius-center-class">{{index}}</text>
+          <text class="radius-center-class">{{index+1}}</text>
         </span>
           <span><text decode="{{true}}" >&emsp;&emsp;&emsp;{{item.nickName}}</text> </span>
         <text decode="{{true}}" style="position: absolute;left:80%">{{item.score}}</text>
